@@ -2,8 +2,10 @@
 // ########## SETUP
 
 // Express
+console.log("Running app from:", __dirname);
 const express = require('express');
 const app = express();
+const path = require('path');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
@@ -16,7 +18,9 @@ const db = require('./database/db-connector');
 // Handlebars
 const { engine } = require('express-handlebars'); // Import express-handlebars engine
 app.engine('.hbs', engine({ extname: '.hbs' })); // Create instance of handlebars
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', '.hbs'); // Use handlebars engine for *.hbs files.
+
 
 // ########################################
 // ########## ROUTE HANDLERS
@@ -74,8 +78,8 @@ app.get('/customers', async function (req, res) {
 app.get('/employees', async function (req, res) {
     try {
         const query1 = 
-            "SELECT employeeID, firstName, lastName, position, payRate, hireDate FROM Employees;"
-        ;
+            "SELECT employeeID, firstName, lastName, phoneNumber, position, payRate, DATE_FORMAT(hireDate, '%Y-%m-%d') As hireDate FROM Employees;"
+        ; 
         const [employees] = await db.query(query1);
         res.render('employees', { employees: employees });
     } catch (error) {
@@ -128,7 +132,7 @@ app.get('/products', async function (req, res) {
 app.get('/sales', async function (req, res) {
     try {
         const query1 = 
-            "SELECT Sales.saleID, Sales.saleDate, CONCAT(Customers.firstName, ' ', Customers.lastName) AS customerFullName, CONCAT(Employees.firstName, ' ', Employees.lastName) AS employeeFullName FROM Sales LEFT JOIN Customers ON Sales.customerID = Customers.customerID LEFT JOIN Employees ON Sales.employeeID = Employees.employeeID ORDER BY Sales.saleID ASC;";
+            "SELECT Sales.saleID, DATE_FORMAT(Sales.saleDate, '%Y-%m-%d') AS saleDate, CONCAT(Customers.firstName, ' ', Customers.lastName) AS customerFullName, CONCAT(Employees.firstName, ' ', Employees.lastName) AS employeeFullName FROM Sales LEFT JOIN Customers ON Sales.customerID = Customers.customerID LEFT JOIN Employees ON Sales.employeeID = Employees.employeeID ORDER BY Sales.saleID ASC;";
         const query2 ="SELECT customerID, CONCAT(firstName, ' ', lastName) AS customerFullName FROM Customers;";
         const query3 = "SELECT employeeID, CONCAT(firstName, ' ', lastName) AS employeeFullName FROM Employees;";
         const [sales] = await db.query(query1);
