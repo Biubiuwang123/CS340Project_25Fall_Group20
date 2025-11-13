@@ -45,13 +45,13 @@ SELECT email, phoneNumber FROM Suppliers WHERE supplierID = :supplier_ID_from_dr
 SELECT customerID, firstName, lastName, email, phoneNumber, address, loyaltyPoints FROM Customers;
 
 -- get a specific customer for update
-SELECT email, phoneNumber, address FROM Customers WHERE customerID = :customer_ID_from_dropdown_Input;
+SELECT email, phoneNumber, address, loyaltyPoints FROM Customers WHERE customerID = :customer_ID_from_dropdown_Input;
 
 -- get all employees
-SELECT employeeID, firstName, lastName, position, payRate, hireDate FROM Employees;
+SELECT employeeID, firstName, lastName, phoneNumber, position, payRate, hireDate FROM Employees;
 
 -- get a specific employee for update
-SELECT position, payRate FROM Employees WHERE employeeID = :employee_ID_from_dropdown_Input;
+SELECT phoneNumber,position, payRate FROM Employees WHERE employeeID = :employee_ID_from_dropdown_Input;
 
 -- get all products with category and supplier info
 SELECT Products.productID, Products.productName, Products.description, 
