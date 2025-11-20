@@ -170,7 +170,60 @@ app.get('/saledetails', async function (req, res) {
 });
 
 // ########################################
-// ########## DELETE ROUTES (CUD Operations)
+// ########## CREATE, UPDATE, DELETE ROUTES (CUD Operations)
+
+// POST route for creating customers
+app.post('/create-customer', async function (req, res) {
+    try {
+        const { create_firstNameInput, create_lastNameInput, create_phoneInput, create_emailInput, create_addressInput, create_loyaltyPointsInput } = req.body;
+        
+        if (!create_firstNameInput || !create_lastNameInput || !create_phoneInput) {
+            return res.status(400).send("First name, last name, and phone number are required");
+        }
+
+        const query = "INSERT INTO Customers (firstName, lastName, phoneNumber, email, address, loyaltyPoints) VALUES (?, ?, ?, ?, ?, ?)";
+        await db.query(query, [
+            create_firstNameInput,
+            create_lastNameInput,
+            create_phoneInput,
+            create_emailInput || null,
+            create_addressInput || null,
+            create_loyaltyPointsInput || 0
+        ]);
+        
+        console.log("Customer created:", create_firstNameInput, create_lastNameInput);
+        res.redirect('/customers');
+    } catch (error) {
+        console.error("Error creating customer:", error);
+        res.status(500).send("Error creating customer.");
+    }
+});
+
+// POST route for updating customers
+app.post('/update-customer', async function (req, res) {
+    try {
+        const { customer_ID_from_dropdown_Input, update_phoneInput, update_emailInput, addressInput, update_loyaltyPointsInput } = req.body;
+        
+        if (!customer_ID_from_dropdown_Input || !update_phoneInput) {
+            return res.status(400).send("Customer ID and phone number are required");
+        }
+
+        const query = "UPDATE Customers SET phoneNumber = ?, email = ?, address = ?, loyaltyPoints = ? WHERE customerID = ?";
+        await db.query(query, [
+            update_phoneInput,
+            update_emailInput || null,
+            addressInput || null,
+            update_loyaltyPointsInput || 0,
+            customer_ID_from_dropdown_Input
+        ]);
+        
+        console.log("Customer updated:", customer_ID_from_dropdown_Input);
+        res.redirect('/customers');
+    } catch (error) {
+        console.error("Error updating customer:", error);
+        res.status(500).send("Error updating customer.");
+    }
+});
 
 // DELETE route for customers
 app.delete('/delete-customer/:id', async function (req, res) {

@@ -6,31 +6,64 @@
 - Your ONID credentials
 - Database credentials already configured in `project/database/db-connector.js`
 
-### Step 1: Upload Files to Server
+### Deployment Methods
 
-**Option A: Using SCP (Secure Copy)**
+**Option A: Automated GitHub Deployment (Recommended)**
+
+Use the provided script for automated deployment:
+```bash
+# From your local machine
+./deploy-github.sh your-onid
+```
+
+This script will:
+1. Create the directory structure (`cs340/project/home`)
+2. Clone your GitHub repository
+3. Copy files to a working directory (keeping original unchanged)
+4. Install dependencies
+5. Set up the database
+
+**Option B: Manual GitHub Deployment**
+
+Follow these steps manually:
+
+```bash
+# 1. SSH into the server
+ssh your-onid@classwork.engr.oregonstate.edu
+
+# 2. Create directory structure
+mkdir -p ~/cs340/project/home
+cd ~/cs340/project/home
+
+# 3. Clone the repository
+git clone https://github.com/Biubiuwang123/CS340Project_25Fall_Group20.git
+
+# 4. Copy files to working directory (keeping original unchanged)
+cp -r CS340Project_25Fall_Group20/project beaver-stationary
+cp CS340Project_25Fall_Group20/DDL.sql beaver-stationary/
+cp CS340Project_25Fall_Group20/DML.sql beaver-stationary/
+cp CS340Project_25Fall_Group20/PL.sql beaver-stationary/
+
+# 5. Navigate to working directory
+cd beaver-stationary
+```
+
+**Option C: Using SCP (Alternative)**
 ```bash
 # From your local machine, navigate to the project root
 cd /Users/qwang/CS340Project_25Fall_Group20/CS340Project_25Fall_Group20
 
 # Upload the entire project (excluding node_modules)
-scp -r project DDL.sql PL.sql DML.sql your-onid@classwork.engr.oregonstate.edu:~/
-```
-
-**Option B: Using Git (Recommended)**
-```bash
-# On the server
-ssh your-onid@classwork.engr.oregonstate.edu
-cd ~
-git clone <your-repo-url> CS340Project
-cd CS340Project
+scp -r project DDL.sql PL.sql DML.sql your-onid@classwork.engr.oregonstate.edu:~/cs340/project/home/
 ```
 
 ### Step 2: Install Dependencies on Server
 
 ```bash
-ssh your-onid@classwork.engr.oregonstate.edu
-cd ~/project  # or wherever you uploaded the files
+# Navigate to your working directory
+cd ~/cs340/project/home/beaver-stationary  # or your chosen directory
+
+# Install Node.js dependencies
 npm install
 ```
 
@@ -40,19 +73,20 @@ Make sure your database credentials in `project/database/db-connector.js` are co
 
 Then run the SQL files:
 ```bash
-# Option 1: Use the run-sql-files.js script
-cd ~/project
+# Option 1: Use the run-sql-files.js script (recommended)
+cd ~/cs340/project/home/beaver-stationary
 node run-sql-files.js
 
 # Option 2: Run SQL files manually via MySQL
-mysql -h classmysql.engr.oregonstate.edu -u your-username -p your-database < ../DDL.sql
-mysql -h classmysql.engr.oregonstate.edu -u your-username -p your-database < ../PL.sql
+mysql -h classmysql.engr.oregonstate.edu -u cs340_xushi -p cs340_xushi < DDL.sql
+mysql -h classmysql.engr.oregonstate.edu -u cs340_xushi -p cs340_xushi < PL.sql
+mysql -h classmysql.engr.oregonstate.edu -u cs340_xushi -p cs340_xushi < DML.sql
 ```
 
 ### Step 4: Start the Application
 
 ```bash
-cd ~/project
+cd ~/cs340/project/home/beaver-stationary
 
 # For production (runs in background with forever)
 npm run production

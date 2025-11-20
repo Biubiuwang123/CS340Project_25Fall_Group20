@@ -46,7 +46,7 @@
 {{! CREATE form }}
 {{!-- CREATE FORM --}}
 <h2>Add a New Customer</h2>
-<form class="cuForm" id="create_customer_form">
+<form class="cuForm" id="create_customer_form" method="POST" action="/create-customer">
     <label for="create_firstNameInput">First Name: </label>
     <input type="text" name="create_firstNameInput" id="create_firstNameInput" required>
 
@@ -71,7 +71,7 @@
 {{! UPDATE form }}
 {{!-- UPDATE FORM --}}
 <h2>Update a Customer</h2>
-<form class="cuForm" id="update_customer_form">
+<form class="cuForm" id="update_customer_form" method="POST" action="/update-customer">
     <label for="update_customer_ID_from_dropdown_Input">Select Customer: </label>
     <select name="customer_ID_from_dropdown_Input" id="update_customer_ID_from_dropdown_Input" required>
         <option value="" disabled selected>Select a Customer</option>
@@ -89,7 +89,7 @@
     <input type="email" name="update_emailInput" id="update_emailInput">
 
     <label for="update_addressInput">Address: </label>
-    <input type="text" name="update_addressInput" id="addressInput">
+    <input type="text" name="addressInput" id="update_addressInput">
 
     <label for="update_loyaltyPointsInput">Loyalty Points: </label>
     <input type="number" name="update_loyaltyPointsInput" id="update_loyaltyPointsInput" min="0" required>
