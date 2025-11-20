@@ -30,14 +30,14 @@
             <td>{{this.loyaltyPoints}}</td>
 
             {{! DELETE form }}
-            <form id='delete_customer_form' method='POST' action='/delete-customer'>
-                <input type='hidden' name='delete_customer_id' value='{{this.customerID}}' />
-                <td>
+            <td>
+                <form id='delete_customer_form' method='POST' action='/delete-customer'>
+                    <input type='hidden' name='delete_customer_id' value='{{this.customerID}}' />
                     <button type='submit'>
                         Delete
                     </button>
-                </td>
-            </form>
+                </form>
+            </td>
         </tr>
         {{/each}}
     </tbody>
