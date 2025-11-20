@@ -23,5 +23,18 @@
 
     {{{body}}}
 
+<script>
+// Fix delete forms - add method and action attributes that Handlebars is stripping on server
+document.addEventListener('DOMContentLoaded', function() {
+    const deleteForms = document.querySelectorAll('form[id="delete_customer_form"]');
+    deleteForms.forEach(function(form) {
+        if (!form.hasAttribute('method')) {
+            form.setAttribute('method', 'POST');
+            form.setAttribute('action', '/delete-customer');
+        }
+    });
+});
+</script>
+
 </body>
 </html>
