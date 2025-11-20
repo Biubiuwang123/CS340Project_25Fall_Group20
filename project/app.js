@@ -22,7 +22,11 @@ app.engine('.hbs', engine({
     defaultLayout: 'main',
     layoutsDir: path.join(__dirname, 'views/layouts'),
     partialsDir: path.join(__dirname, 'views/partials'),
-    cache: false // Disable template caching for development
+    cache: false, // Disable template caching for development
+    runtimeOptions: {
+        allowProtoPropertiesByDefault: true,
+        allowProtoMethodsByDefault: true
+    }
 })); // Create instance of handlebars
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', '.hbs'); // Use handlebars engine for *.hbs files.
