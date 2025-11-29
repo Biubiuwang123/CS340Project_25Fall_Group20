@@ -269,6 +269,51 @@ app.post('/delete-customer', async function (req, res) {
     }
 });
 
+// POST route for creating Sale Details
+app.post('/create-saledetail', async function (req, res) {
+    try {
+        const { saleID, productID, quantity, unitPrice } = req.body;
+        // Basic INSERT query (matches your DML)
+        const query = "INSERT INTO SaleDetails (saleID, productID, quantity, unitPrice) VALUES (?, ?, ?, ?)";
+        
+        await db.query(query, [saleID, productID, quantity, unitPrice]);
+        res.redirect('/saledetails');
+    } catch (error) {
+        console.error("Error creating sale detail:", error);
+        res.status(500).send("Error creating sale detail.");
+    }
+});
+
+// POST route for updating Sale Details
+app.post('/update-saledetail', async function (req, res) {
+    try {
+        const { saleDetailID, quantity, unitPrice } = req.body;
+        // Basic UPDATE query
+        const query = "UPDATE SaleDetails SET quantity = ?, unitPrice = ? WHERE saleDetailID = ?";
+        
+        await db.query(query, [quantity, unitPrice, saleDetailID]);
+        res.redirect('/saledetails');
+    } catch (error) {
+        console.error("Error updating sale detail:", error);
+        res.status(500).send("Error updating sale detail.");
+    }
+});
+
+// POST route for deleting Sale Details
+app.post('/delete-saledetail', async function (req, res) {
+    try {
+        const { saleDetailID } = req.body;
+        // Calling the Stored Procedure created in Phase 1
+        const query = "CALL sp_delete_saledetail(?)";
+        
+        await db.query(query, [saleDetailID]);
+        res.redirect('/saledetails');
+    } catch (error) {
+        console.error("Error deleting sale detail:", error);
+        res.status(500).send("Error deleting sale detail.");
+    }
+});
+
 // ########################################
 // ########## RESET & TEST ROUTES
 
