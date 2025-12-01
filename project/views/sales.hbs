@@ -30,10 +30,12 @@
       <td>{{this.employeeFullName}}</td>
 
       {{! DELETE form }}
-      <form id='delete_sale_form'>
-        <input type='hidden' name='delete_sale_id' value='{{this.saleID}}' />
-        <td><button type='submit'>Delete</button></td>
-      </form>
+       <td>
+        <form method="POST" action="/delete-sale">
+            <input type="hidden" name="delete_saleID" value="{{this.saleID}}">
+            <button type="submit">Delete</button>
+        </form>
+       </td>
     </tr>
     {{/each}}
   </tbody>
@@ -41,17 +43,18 @@
 
 {{! CREATE form }}
 <h2>Add a New Sale</h2>
-<form class="cuForm" id="create_sale_form">
-  <label for="create_customer_ID_from_dropdown_Input">Customer:</label>
-  <select name="create_customer_ID_from_dropdown_Input" id="create_customer_ID_from_dropdown_Input" >
+<form class="cuForm" id="create_sale_form" method="POST" action="/create-sale">
+  <label for="create_customerIDInput">Customer:</label>
+  <select name="create_customerIDInput" id="create_customerIDInput" >
     <option value="" disabled selected>Select a Customer</option>
+    <option value="">Not Registered</option>
     {{#each customers}}
     <option value="{{this.customerID}}">{{this.customerFullName}}</option>
     {{/each}}
   </select>
 
-  <label for="create_employee_ID_from_dropdown_Input">Employee:</label>
-  <select name="create_employee_ID_from_dropdown_Input" id="create_employee_ID_from_dropdown_Input" required>
+  <label for="create_employeeIDInput">Employee:</label>
+  <select name="create_employeeIDInput" id="create_employeeIDInput" required>
     <option value="" disabled selected>Select an Employee</option>
     {{#each employees}}
     <option value="{{this.employeeID}}">{{this.employeeFullName}}</option>
@@ -66,25 +69,26 @@
 
 {{! UPDATE form }}
 <h2>Update a Sale</h2>
-<form class="cuForm" id="update_sale_form">
-  <label for="update_sale_ID_from_dropdown_Input">Select Sale:</label>
-  <select name="update_sale_ID_from_dropdown_Input" id="update_sale_ID_from_dropdown_Input" required>
+<form class="cuForm" id="update_sale_form" method="POST" action="/update-sale">
+  <label for="update_saleIDInput">Select Sale:</label>
+  <select name="update_saleIDInput" id="update_saleIDInput" required>
     <option value="" disabled selected>Select a Sale</option>
     {{#each sales}}
     <option value="{{this.saleID}}">{{this.saleID}}</option>
     {{/each}}
   </select>
 
-  <label for="update_customer_ID_from_dropdown_Input">Customer:</label>
-  <select name="update_customer_ID_from_dropdown_Input" id="update_customer_ID_from_dropdown_Input" >
+  <label for="update_customerIDInput">Customer:</label>
+  <select name="update_customerIDInput" id="update_customerIDInput" >
     <option value="" disabled selected>Select a Customer</option>
+    <option value="">Not Registered</option>
     {{#each customers}}
     <option value="{{this.customerID}}">{{this.customerFullName}}</option>
     {{/each}}
   </select>
 
-  <label for="update_employee_ID_from_dropdown_Input">Employee:</label>
-  <select name="update_employee_ID_from_dropdown_Input" id="update_employee_ID_from_dropdown_Input" required>
+  <label for="update_employeeIDInput">Employee:</label>
+  <select name="update_employeeIDInput" id="update_employeeIDInput" required>
     <option value="" disabled selected>Select an Employee</option>
     {{#each employees}}
     <option value="{{this.employeeID}}">{{this.employeeFullName}}</option>
@@ -92,7 +96,7 @@
   </select>
 
   <label for="update_saleDateInput">Sale Date:</label>
-  <input type="date" name="update_saleDateInput" id="update_update_saleDateInput"required>
+  <input type="date" name="update_saleDateInput" id="update_saleDateInput"required>
 
   <input type="submit" value="Update Sale">
 </form>

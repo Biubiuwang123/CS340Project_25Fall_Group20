@@ -19,7 +19,6 @@
             <th>Supplier Name</th>
             <th>Email</th>
             <th>Phone Number</th>
-            <th></th>
         </tr>
     </thead>
 
@@ -31,55 +30,7 @@
             <td>{{this.supplierName}}</td>
             <td>{{this.email}}</td>
             <td>{{this.phoneNumber}}</td>
-
-            {{! DELETE form }}
-            <form id='delete_supplier_form'>
-                <input type='hidden' name='delete_supplier_id' value='{{this.supplierID}}' />
-                <td>
-                    <button type='submit'>
-                        Delete
-                    </button>
-                </td>
-            </form>
         </tr>
         {{/each}}
     </tbody>
 </table>
-
-{{! CREATE form }}
-{{!-- CREATE FORM --}}
-<h2>Add a New Supplier</h2>
-<form class="cuForm" id="create_supplier_form">
-    <label for="supplierNameInput">Supplier Name: </label>
-    <input type="text" name="supplierNameInput" id="supplierNameInput" required>
-
-    <label for="emailInput">Email: </label>
-    <input type="emial" name="emailInput" id="emailInput" required>
-
-    <label for="phoneNumberInput">PhoneNumber: </label>
-    <input type="text" name="phoneNumberInput" id="phoneNumberInput" required>
-    <input type="submit" value="Add Supplier">
-</form>
-    
-
-{{!-- UPDATE form --}}
-<h2>Update an Supplier</h2>
-<form class="cuForm" id="update_supplier_form">
-    <label for="supplier_ID_from_dropdown_Input">Select Supplier: </label>
-    <select name="supplier_ID_from_dropdown_Input" id="supplier_ID_from_dropdown_Input" required>
-        <option value="" disabled selected>Select an Supplier</option>
-        {{#each suppliers}}
-        <option value="{{this.supplierID}}" required>
-            {{this.supplierID}} - {{this.supplierName}} 
-        </option>
-        {{/each}}
-    </select>
-
-    <label for="emailInput">Email: </label>
-    <input type="emial" name="emailInput" id="emailInput" required>
-
-    <label for="phoneInput">PhoneNumber: </label>
-    <input type="text" name="phoneNumberInput" id="phoneNumberInput" required>
-
-    <input type="submit" value="Update Supplier">
-</form>

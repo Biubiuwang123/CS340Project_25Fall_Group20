@@ -22,7 +22,6 @@
             <th>Position</th>
             <th>Pay Rate</th>
             <th>Hire Date</th>
-            <th></th>
         </tr>
     </thead>
 
@@ -38,68 +37,10 @@
             <td>{{this.payRate}}</td>
             <td>{{this.hireDate}}</td>
 
-            {{! DELETE form }}
-            <form id='delete_employee_form'>
-                <input type='hidden' name='delete_employee_id' value='{{this.employeeID}}' />
-                <td>
-                    <button type='submit'>
-                        Delete
-                    </button>
-                </td>
-            </form>
         </tr>
         {{/each}}
     </tbody>
 </table>
 
-{{!-- CREATE form --}}
-<h2>Add a New Employee</h2>
-<form class="cuForm" id="create_employee_form">
-    <label for="create_firstNameInput">First Name: </label>
-    <input type="text" name="create_firstNameInput" id="create_firstNameInput" required>
 
-    <label for="create_lastNameInput">Last Name: </label>
-    <input type="text" name="create_lastNameInput" id="create_lastNameInput" required>
 
-    <label for="create_phoneNumberInput">Phone Number: </label>
-    <input type="text" name="create_phoneNumberInput" id="create_phoneNumberInput" required>
-
-    <label for="create_positionInput">Position: </label>
-    <input type="text" name="create_positionInput" id="create_positionInput" required>
-
-    <label for="create_payRateInput">Pay Rate: </label>
-    <input type="number" name="create_payRateInput" id="create_payRateInput" min="0" step="0.01" required>
-
-    <label for="create_hireDateInput">Hire Date: </label>
-    <input type="date" name="create_hireDateInput" id="create_hireDateInput" required>
-
-    <input type="submit" value="Add Employee">
-</form>
-
-{{!-- UPDATE form --}}
-<h2>Update an Employee</h2>
-<form class="cuForm" id="update_employee_form">
-    <label for="employee_ID_from_dropdown_Input">Select Employee: </label>
-    <select name="update_employee_ID_from_dropdown_Input" id="update_employee_ID_from_dropdown_Input" required>
-        <option value="" disabled selected>Select an Employee</option>
-        {{#each employees}}
-        <option value="{{this.employeeID}}">
-            {{this.employeeID}} - {{this.firstName}} {{this.lastName}}
-        </option>
-        {{/each}}
-    </select>
-
-    <label for="update_phoneNumberInput">Phone Number: </label>
-    <input type="text" name="update_phoneNumberInput" id="update_phoneNumberInput" required>
-
-    <label for="update_positionInput">Position: </label>
-    <input type="text" name="update_positionInput" id="update_positionInput" required>
-
-    <label for="update_payRateInput">Pay Rate: </label>
-    <input type="number" name="update_payRateInput" id="update_payRateInput" min="0" step="0.01" required>
-
-    <label for="update_hireDateInput">Hire Date: </label>
-    <input type="date" name="update_hireDateInput" id="update_hireDateInput" required>
-
-    <input type="submit" value="Update Employee">
-</form>

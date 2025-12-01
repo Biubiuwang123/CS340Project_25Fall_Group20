@@ -18,7 +18,6 @@
             <th>Category ID</th>
             <th>Category Name</th>
             <th>Description</th>
-            <th></th>
         </tr>
     </thead>
 
@@ -29,46 +28,8 @@
             <td>{{this.categoryID}}</td>
             <td>{{this.categoryName}}</td>
             <td>{{this.description}}</td>
-
-            {{! DELETE form }}
-            <form id='delete_category_form'>
-                <input type='hidden' name='delete_category_id' value='{{this.categoryID}}' />
-                <td>
-                    <button type='submit'>
-                        Delete
-                    </button>
-                </td>
-            </form>
         </tr>
         {{/each}}
     </tbody>
 </table>
 
-<!-- CREATE -->
-<h2>Add a New Category</h2>
-<form class="cuForm" id="create_category_form">
-    <label for="create_categoryNameInput">Category Name:</label>
-    <input type="text" id="create_categoryNameInput" name="create_categoryNameInput" required>
-
-    <label for="create_descriptionInput">Description:</label>
-    <input type="text" id="create_descriptionInput" name="create_descriptionInput">
-
-    <button type="submit">Add Category</button>
-</form>
-
-<!-- UPDATE -->
-<h2>Update a Category</h2>
-<form class="cuForm" id="update_category_form">
-    <label for="update_category_ID_from_dropdown_Input">Select Category:</label>
-    <select id="update_category_ID_from_dropdown_Input" name="update_category_ID_from_dropdown_Input" required>
-        <option value="" disabled selected>Select a Category</option>
-        {{#each categories}}
-        <option value="{{this.categoryID}}">{{this.categoryName}}</option>
-        {{/each}}
-    </select>
-
-    <label for="update_descriptionInput">New Description:</label>
-    <input type="text" id="update_descriptionInput" name="update_descriptionInput">
-
-    <button type="submit">Update Category</button>
-</form>

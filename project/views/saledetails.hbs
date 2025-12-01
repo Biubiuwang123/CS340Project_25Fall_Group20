@@ -85,6 +85,22 @@
         {{/each}}
     </select>
 
+    <label for="update_saleID">New Sale ID:</label>
+    <select name="saleID" id="update_saleID" required>
+        <option value="" disabled selected>Select a Sale</option>
+        {{#each sales}}
+        <option value="{{this.saleID}}">Sale #{{this.saleID}}</option>
+        {{/each}}
+    </select>
+
+    <label for="update_productID">New Product:</label>
+    <select name="productID" id="update_productID" required>
+        <option value="" disabled selected>Select a Product</option>
+        {{#each products}}
+        <option value="{{this.productID}}">{{this.productName}}</option>
+        {{/each}}
+    </select>
+
     <label for="update_quantity">New Quantity:</label>
     <input type="number" name="quantity" id="update_quantity" min="1" required>
 

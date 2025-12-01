@@ -215,22 +215,24 @@ app.post('/create-customer', async function (req, res) {
 // POST route for updating customers
 app.post('/update-customer', async function (req, res) {
     try {
-        const {update_customer_ID_from_dropdown_Input, update_phoneInput, update_emailInput, update_addressInput, update_loyaltyPointsInput } = req.body;
+        const {update_customerIDInput, update_firstNameInput,update_lastNameInput,update_phoneInput, update_emailInput, update_addressInput, update_loyaltyPointsInput } = req.body;
         
-        if (!update_customer_ID_from_dropdown_Input ) {
+        if (!update_customerIDInput ) {
             return res.status(400).send("Customer ID is required");
         }
 
-        const query = "CALL sp_update_customer(?,?,?,?,?)";
+        const query = "CALL sp_update_customer(?,?,?,?,?,?,?)";
         await db.query(query, [
-            update_customer_ID_from_dropdown_Input,
+            update_customerIDInput,
+            update_firstNameInput,
+            update_lastNameInput,
             update_phoneInput,
             update_emailInput || null,
             update_addressInput || null,
             update_loyaltyPointsInput || 0,
         ]);
         
-        console.log("Customer updated:", update_customer_ID_from_dropdown_Input);
+        console.log("Customer updated:", update_customerIDInput);
         res.redirect('/customers');
     } catch (error) {
         console.error("Error updating customer:", error);
@@ -274,7 +276,7 @@ app.post('/create-saledetail', async function (req, res) {
     try {
         const { saleID, productID, quantity, unitPrice } = req.body;
         // Basic INSERT query (matches your DML)
-        const query = "INSERT INTO SaleDetails (saleID, productID, quantity, unitPrice) VALUES (?, ?, ?, ?)";
+        const query = "CALL sp_create_saledetail(?, ?, ?, ?)";
         
         await db.query(query, [saleID, productID, quantity, unitPrice]);
         res.redirect('/saledetails');
@@ -287,11 +289,11 @@ app.post('/create-saledetail', async function (req, res) {
 // POST route for updating Sale Details
 app.post('/update-saledetail', async function (req, res) {
     try {
-        const { saleDetailID, quantity, unitPrice } = req.body;
+        const { saleDetailID,saleID,productID,quantity, unitPrice } = req.body;
         // Basic UPDATE query
-        const query = "UPDATE SaleDetails SET quantity = ?, unitPrice = ? WHERE saleDetailID = ?";
+        const query = "CALL sp_update_saledetail(?,?,?, ?, ?)";
         
-        await db.query(query, [quantity, unitPrice, saleDetailID]);
+        await db.query(query, [saleDetailID,saleID,productID,quantity, unitPrice]);
         res.redirect('/saledetails');
     } catch (error) {
         console.error("Error updating sale detail:", error);
@@ -314,6 +316,48 @@ app.post('/delete-saledetail', async function (req, res) {
     }
 });
 
+// POST route for creating Sales
+app.post('/create-sale', async function (req, res) {
+    try {
+        const { create_customerIDInput, create_employeeIDInput, create_saleDateInput } = req.body;
+        const query = "CALL sp_create_sale(?, ?, ?)";
+        
+        await db.query(query, [create_customerIDInput||null, create_employeeIDInput, create_saleDateInput]);
+        res.redirect('/sales');
+    } catch (error) {
+        console.error("Error creating sale:", error);
+        res.status(500).send("Error creating sale.");
+    }
+});
+
+// POST route for updating Sales
+app.post('/update-sale', async function (req, res) {
+    try {
+        const { update_saleIDInput, update_customerIDInput, update_employeeIDInput, update_saleDateInput } = req.body;
+        const query = "CALL sp_update_sale(?, ?, ?, ?)";
+        
+        await db.query(query, [update_saleIDInput, update_customerIDInput||null, update_employeeIDInput, update_saleDateInput]);
+        res.redirect('/sales');
+    } catch (error) {
+        console.error("Error updating sale:", error);
+        res.status(500).send("Error updating sale.");
+    }
+});
+
+// POST route for deleting Sales
+app.post('/delete-sale', async function (req, res) {
+    try {
+        const { delete_saleID } = req.body;
+        const query = "CALL sp_delete_sale(?)";
+        
+        await db.query(query, [delete_saleID]);
+        res.redirect('/sales');
+    } catch (error) {
+        console.error("Error deleting sale:", error);
+        res.status(500).send("Error deleting sale.");
+    }
+});
+
 // ########################################
 // ########## RESET & TEST ROUTES
 
@@ -321,7 +365,7 @@ app.post('/delete-saledetail', async function (req, res) {
 app.get('/reset-table-data', async function (req, res) {
     try {
         // Calls the Stored Procedure defined in DDL.sql to reset schema and data
-        const query = "CALL reset_db();"; 
+        const query = "CALL sp_reset_db();"; 
         await db.query(query);
         console.log("Database Reset Completed.");
         

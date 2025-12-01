@@ -22,7 +22,6 @@
       <th>List Price</th>
       <th>Stock Quantity</th>
       <th>Reorder Level</th>
-      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -37,91 +36,9 @@
       <td>{{this.stockQuantity}}</td>
       <td>{{this.reorderLevel}}</td>
 
-      {{! DELETE form }}
-      <form id='delete_product_form'>
-        <input type='hidden' name='delete_product_id' value='{{this.productID}}' />
-        <td><button type='submit'>Delete</button></td>
-      </form>
     </tr>
     {{/each}}
   </tbody>
 </table>
 
-{{! CREATE form }}
-<h2>Add a New Product</h2>
-<form class="cuForm" id="create_product_form">
-  <label for="create_productNameInput">Product Name:</label>
-  <input type="text" name="create_productNameInput" id="create_productNameInput" required>
 
-  <label for="create_descriptionInput">Description:</label>
-  <input type="text" name="create_descriptionInput" id="create_descriptionInput">
-
-  <label for="create_category_id_from_dropdown_Input">Category:</label>
-  <select name="create_category_id_from_dropdown_Input" id="create_category_id_from_dropdown_Input" required>
-    <option value="" disabled selected>Select Category</option>
-    {{#each categories}}
-    <option value="{{this.categoryID}}">{{this.categoryName}}</option>
-    {{/each}}
-  </select>
-
-  <label for="create_supplier_id_from_dropdown_Input">Supplier:</label>
-  <select name="create_supplier_id_from_dropdown_Input" id="create_supplier_id_from_dropdown_Input" required>
-    <option value="" disabled selected>Select Supplier</option>
-    {{#each suppliers}}
-    <option value="{{this.supplierID}}">{{this.supplierName}}</option>
-    {{/each}}
-  </select>
-
-  <label for="create_listPriceInput">List Price:</label>
-  <input type="number" name="create_listPriceInput" id="create_listPriceInput" min="0" step="0.01">
-
-  <label for="create_stockQtyInput">Stock Quantity:</label>
-  <input type="number" name="create_stockQtyInput" id="create_stockQtyInput" min="0">
-
-  <label for="create_reorderLevelInput">Reorder Level:</label>
-  <input type="number" name="create_reorderLevelInput" id="create_reorderLevelInput" min="0">
-
-  <input type="submit" value="Add Product">
-</form>
-
-{{! UPDATE form }}
-<h2>Update a Product</h2>
-<form class="cuForm" id="update_product_form">
-  <label for="update_product_ID_from_dropdown_Input">Select Product:</label>
-  <select name="update_product_ID_from_dropdown_Input" id=update_"product_ID_from_dropdown_Input" required>
-    <option value="" disabled selected>Select a Product</option>
-    {{#each products}}
-    <option value="{{this.productID}}">{{this.productName}}</option>
-    {{/each}}
-  </select>
-
-  <label for="update_descriptionInput">Description:</label>
-  <input type="text" name="update_descriptionInput" id="update_descriptionInput">
-
-  <label for="update_category_id_from_dropdown_Input">Category:</label>
-  <select name="update_category_id_from_dropdown_Input" id="update_category_id_from_dropdown_Input" required>
-    <option value="" disabled selected>Select Category</option>
-    {{#each categories}}
-    <option value="{{this.categoryID}}">{{this.categoryName}}</option>
-    {{/each}}
-  </select>
-
-  <label for="update_supplier_id_from_dropdown_Input">Supplier:</label>
-  <select name="update_supplier_id_from_dropdown_Input" id="update_supplier_id_from_dropdown_Input" required>
-    <option value="" disabled selected>Select Supplier</option>
-    {{#each suppliers}}
-    <option value="{{this.supplierID}}">{{this.supplierName}}</option>
-    {{/each}}
-  </select>
-
-  <label for="update_listPriceInput">List Price:</label>
-  <input type="number" name="update_listPriceInput" id="update_listPriceInput" min="0" step="0.01">
-
-  <label for="update_stockQtyInput">Stock Quantity:</label>
-  <input type="number" name="update_stockQtyInput" id="update_stockQtyInput" min="0">
-
-  <label for="update_reorderLevelInput">Reorder Level:</label>
-  <input type="number" name="update_reorderLevelInput" id="update_reorderLevelInput" min="0">
-
-  <input type="submit" value="Update Product">
-</form>

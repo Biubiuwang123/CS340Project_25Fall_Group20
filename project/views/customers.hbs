@@ -83,8 +83,8 @@
 {{!-- UPDATE FORM --}}
 <h2>Update a Customer</h2>
 <form class="cuForm" id="update_customer_form" method="POST" action="/update-customer">
-    <label for="update_customer_ID_from_dropdown_Input">Select Customer: </label>
-    <select name="update_customer_ID_from_dropdown_Input" id="update_customer_ID_from_dropdown_Input" required>
+    <label for="update_customerIDInput">Select Customer: </label>
+    <select name="update_customerIDInput" id="update_customerIDInput" required>
         <option value="" disabled selected>Select a Customer</option>
         {{#each customers}}
         <option value="{{this.customerID}}" required>
@@ -92,6 +92,11 @@
         </option>
         {{/each}}
     </select>
+    <label for="update_firstNameInput">First Name: </label>
+    <input type="text" name="update_firstNameInput" id="update_firstNameInput" required>
+
+    <label for="update_lastNameInput">Last Name: </label>
+    <input type="text" name="update_lastNameInput" id="update_lastNameInput" required>
 
     <label for="update_phoneInput">Phone Number: </label>
     <input type="text" name="update_phoneInput" id="update_phoneInput" required>
