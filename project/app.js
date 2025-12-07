@@ -61,28 +61,6 @@ app.get('/', async function (req, res) {
     }
 });
 
-//app.get('/bsg-people', async function (req, res) {
-    //try {
-        // Create and execute our queries
-        // In query1, we use a JOIN clause to display the names of the homeworlds
-       // const query1 = `SELECT bsg_people.id, bsg_people.fname, bsg_people.lname, \
-            //bsg_planets.name AS 'homeworld', bsg_people.age FROM bsg_people \
-           // LEFT JOIN bsg_planets ON bsg_people.homeworld = bsg_planets.id;`;
-        //const query2 = 'SELECT * FROM bsg_planets;';
-        //const [people] = await db.query(query1);
-        //const [homeworlds] = await db.query(query2);
-
-        // Render the bsg-people.hbs file, and also send the renderer
-        //  an object that contains our bsg_people and bsg_homeworld information
-        //res.render('bsg-people', { people: people, homeworlds: homeworlds });
-    //} catch (error) {
-        //console.error('Error executing queries:', error);
-        // Send a generic error message to the browser
-        //res.status(500).send(
-        //    'An error occurred while executing the database queries.'
-        //);
-    //}
-//});
 app.get('/customers', async function (req, res) {
     try {
         // Create and execute our queries
@@ -255,19 +233,6 @@ app.get('/api/customer/:id', async function (req, res) {
     res.json(rows[0][0]);
 });
 
-// DELETE route for customers
-//app.delete('/delete-customer/:id', async function (req, res) {
-   // try {
-       // const customerID = req.params.id;
-       // const query = "DELETE FROM Customers WHERE customerID = ?";
-       // await db.query(query, [customerID]);
-       // console.log("Customer deleted:", customerID);
-       // res.status(200).send("Customer deleted successfully");
-   // } catch (error) {
-    //    console.error("Error deleting customer:", error);
-     //   res.status(500).send("Error deleting customer.");
-  //  }
-//});
 
 // POST route for customer deletion (handles form submissions)
 app.post('/delete-customer', async function (req, res) {
