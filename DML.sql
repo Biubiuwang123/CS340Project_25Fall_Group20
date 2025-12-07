@@ -8,17 +8,11 @@ SELECT categoryID, categoryName FROM Categories;
 -- Selects all categories with descriptions for browsing
 SELECT categoryID, categoryName, description FROM Categories;
 
--- Selects a specific category for update form
-SELECT description FROM Categories WHERE categoryID = :category_ID_from_dropdown_Input;
-
 -- Selects all suppliers for the dropdown list
 SELECT supplierID, supplierName FROM Suppliers;
 
 -- Selects all suppliers with contact information for browsing
 SELECT supplierID, supplierName, email, phoneNumber FROM Suppliers;
-
--- Selects a specific supplier for update form
-SELECT email, phoneNumber FROM Suppliers WHERE supplierID = :supplier_ID_from_dropdown_Input;
 
 -- Selects all customers for the dropdown list
 SELECT customerID, CONCAT(firstName, ' ', lastName) AS customerFullName FROM Customers;
@@ -26,17 +20,14 @@ SELECT customerID, CONCAT(firstName, ' ', lastName) AS customerFullName FROM Cus
 -- Selects all customers with full details for browsing
 SELECT customerID, firstName, lastName, email, phoneNumber, address, loyaltyPoints FROM Customers;
 
--- Selects a specific customer for update form
-SELECT email, phoneNumber, address, loyaltyPoints FROM Customers WHERE customerID = :customer_ID_from_dropdown_Input;
+-- Selects a specific customer for update form pre-populate(using Stored Procedure)
+SELECT * FROM Customers WHERE customerID = :customerIDInput;
 
 -- Selects all employees for the dropdown list
 SELECT employeeID, CONCAT(firstName, ' ', lastName) AS employeeFullName FROM Employees;
 
 -- Selects all employees with full details for browsing
 SELECT employeeID, firstName, lastName, phoneNumber, position, payRate, DATE_FORMAT(hireDate, '%Y-%m-%d') AS hireDate FROM Employees;
-
--- Selects a specific employee for update form
-SELECT phoneNumber, position, payRate FROM Employees WHERE employeeID = :employee_ID_from_dropdown_Input;
 
 -- Selects all products for the dropdown list
 SELECT productID, productName FROM Products;
@@ -48,14 +39,7 @@ FROM Products
 INNER JOIN Categories ON Products.categoryID = Categories.categoryID
 INNER JOIN Suppliers  ON Products.supplierID = Suppliers.supplierID;
 
--- Selects a specific product for update form
-SELECT Products.description, Categories.categoryName AS category, Suppliers.supplierName as supplier, Products.listPrice, Products.stockQuantity, Products.reorderLevel
-FROM Products
-INNER JOIN Categories ON Products.categoryID = Categories.categoryID
-INNER JOIN Suppliers  ON Products.supplierID = Suppliers.supplierID
-WHERE Products.productID = :product_ID_from_dropdown_input;
-
--- Selects all sales with customer and employee info for browsing
+-- Selects all sales with customer and employee info for browsing and dropdown
 -- Uses LEFT JOIN so that sales records with non-registered customers will be displayed
 SELECT Sales.saleID, DATE_FORMAT(Sales.saleDate, '%Y-%m-%d') AS saleDate, CONCAT(Customers.firstName, ' ', Customers.lastName) AS customerFullName,
        CONCAT(Employees.firstName, ' ', Employees.lastName) AS employeeFullName
@@ -64,18 +48,18 @@ LEFT JOIN Customers ON Sales.customerID = Customers.customerID
 LEFT JOIN Employees ON Sales.employeeID = Employees.employeeID
 ORDER BY Sales.saleID ASC;
 
--- Selects all sale IDs for the dropdown list
-SELECT saleID FROM Sales;
+-- Selects a specific sale for update form pre-populate(using Stored Procedure)
+SELECT * FROM Sales WHERE saleID = :saleIDInput;
 
--- Selects all sale details with product and sale info for browsing
+-- Selects all sale details with product and sale info for browsing and dropdown
 SELECT Sales.saleID, SaleDetails.saleDetailID, Products.productName, SaleDetails.quantity, SaleDetails.unitPrice
 FROM SaleDetails
 INNER JOIN Products ON SaleDetails.productID = Products.productID
 INNER JOIN Sales ON SaleDetails.saleID = Sales.saleID
 ORDER BY Sales.saleID ASC;
 
--- Selects all sale detail IDs for the dropdown list
-SELECT saleDetailID FROM SaleDetails;
+-- Selects a specific sale detail for update form pre-populate(using Stored Procedure)
+SELECT * FROM SaleDetails WHERE saleDetailID = :saleDetailIDInput;
 
 -- ########################################
 -- ########## CREATE OPERATIONS (Using Stored Procedures)
