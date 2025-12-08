@@ -9,9 +9,9 @@ This project is adapted from the OSU CS 340 starter code.
 
 - Starter code references:
 
--- https://canvas.oregonstate.edu/courses/2017561/pages/exploration-web-application-technology-2?module_item_id=25645131 (November 2025)
+    - https://canvas.oregonstate.edu/courses/2017561/pages/exploration-web-application-technology-2?module_item_id=25645131 (November 2025)
 
--- https://canvas.oregonstate.edu/courses/2017561/pages/exploration-implementing-cud-operations-in-your-app?module_item_id=25645149 (November 2025)
+    - https://canvas.oregonstate.edu/courses/2017561/pages/exploration-implementing-cud-operations-in-your-app?module_item_id=25645149 (November 2025)
 
 ## AI Tools Citations
 
